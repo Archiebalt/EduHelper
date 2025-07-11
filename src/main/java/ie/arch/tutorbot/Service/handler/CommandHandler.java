@@ -9,16 +9,18 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
+import ie.arch.tutorbot.Service.factory.KeyboardFactory;
 import ie.arch.tutorbot.telegram.Bot;
-import ie.arch.tutorbot.telegram.TelegramProperties;
 import static ie.arch.tutorbot.Service.data.Command.*;
+
+import java.util.List;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class CommandHandler {
 
-    TelegramProperties telegramProperties;
+    KeyboardFactory keyboardFactory;
 
     public BotApiMethod<?> answer(Message message, Bot bot) {
 
@@ -91,6 +93,13 @@ public class CommandHandler {
         return SendMessage
                 .builder()
                 .chatId(message.getChatId())
+                .replyMarkup(keyboardFactory.getInlineKeyboard(
+                    
+                    List.of("Помощь", "Обратная связь"),
+                    List.of(2),
+                    List.of("help", "feedback")
+                
+                ))
                 .text("""
 
                         🖖Приветствую в Tutor-Bot, инструменте для упрощения взаимодействия репититора и ученика.
@@ -101,7 +110,6 @@ public class CommandHandler {
                         📌 Ввести контроль успеваемости
 
                                 """)
-
                 .build();
     }
 

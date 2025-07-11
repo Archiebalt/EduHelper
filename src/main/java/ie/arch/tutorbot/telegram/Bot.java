@@ -5,6 +5,7 @@ import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import ie.arch.tutorbot.Service.UpdateDispatcher;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
@@ -14,9 +15,12 @@ public class Bot extends TelegramWebhookBot {
 
     TelegramProperties telegramProperties;
 
-    public Bot(TelegramProperties telegramProperties) {
+    UpdateDispatcher updateDispatcher;
+
+    public Bot(TelegramProperties telegramProperties, UpdateDispatcher updateDispatcher) {
         super(telegramProperties.getToken());
         this.telegramProperties = telegramProperties;
+        this.updateDispatcher = updateDispatcher;
     }
 
     @Override
@@ -26,7 +30,7 @@ public class Bot extends TelegramWebhookBot {
 
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-        return null;
+        return updateDispatcher.distribute(update, this);
     }
 
     @Override

@@ -9,21 +9,19 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import ie.arch.tutorbot.Service.factory.KeyboardFactory;
 import ie.arch.tutorbot.Service.manager.FeedbackManager;
 import ie.arch.tutorbot.Service.manager.HelpManager;
+import ie.arch.tutorbot.Service.manager.StartManager;
 import ie.arch.tutorbot.telegram.Bot;
-import static ie.arch.tutorbot.Service.data.Command.*;
-import static ie.arch.tutorbot.Service.data.CallbackData.*;
 
-import java.util.List;
+import static ie.arch.tutorbot.Service.data.Command.*;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class CommandHandler {
 
-    KeyboardFactory keyboardFactory;
+    StartManager startManager;
 
     FeedbackManager feedbackManager;
 
@@ -35,7 +33,7 @@ public class CommandHandler {
 
         switch (command) {
             case START -> {
-                return start(message);
+                return startManager.answerCommand(message);
             }
 
             case FEEDBACK_COMMAND -> {
@@ -58,30 +56,6 @@ public class CommandHandler {
                 .builder()
                 .chatId(message.getChatId())
                 .text("Неподдерживаемая команда")
-                .build();
-    }
-
-    private BotApiMethod<?> start(Message message) {
-        return SendMessage
-                .builder()
-                .chatId(message.getChatId())
-                .replyMarkup(keyboardFactory.getInlineKeyboard(
-
-                        List.of("Помощь", "Обратная связь"),
-                        List.of(2),
-                        List.of(HELP, FEEDBACK)
-
-                ))
-                .text("""
-
-                        🖖Приветствую в Tutor-Bot, инструменте для упрощения взаимодействия репититора и ученика.
-
-                        Что бот умеет?
-                        📌 Составлять расписание
-                        📌 Прикреплять домашние задания
-                        📌 Ввести контроль успеваемости
-
-                                """)
                 .build();
     }
 

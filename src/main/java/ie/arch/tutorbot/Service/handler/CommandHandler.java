@@ -10,8 +10,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 import ie.arch.tutorbot.Service.factory.KeyboardFactory;
+import ie.arch.tutorbot.Service.manager.FeedbackManager;
+import ie.arch.tutorbot.Service.manager.HelpManager;
 import ie.arch.tutorbot.telegram.Bot;
 import static ie.arch.tutorbot.Service.data.Command.*;
+import static ie.arch.tutorbot.Service.data.CallbackData.*;
 
 import java.util.List;
 
@@ -22,6 +25,10 @@ public class CommandHandler {
 
     KeyboardFactory keyboardFactory;
 
+    FeedbackManager feedbackManager;
+
+    HelpManager helpManager;
+
     public BotApiMethod<?> answer(Message message, Bot bot) {
 
         String command = message.getText();
@@ -31,12 +38,12 @@ public class CommandHandler {
                 return start(message);
             }
 
-            case FEEDBACK -> {
-                return feedback(message);
+            case FEEDBACK_COMMAND -> {
+                return feedbackManager.answerCommand(message);
             }
 
-            case HELP -> {
-                return help(message);
+            case HELP_COMMAND -> {
+                return helpManager.answerCommand(message);
             }
 
             default -> {
@@ -54,51 +61,16 @@ public class CommandHandler {
                 .build();
     }
 
-    private BotApiMethod<?> help(Message message) {
-        return SendMessage
-                .builder()
-                .chatId(message.getChatId())
-                .text("""
-
-                        📍 Доступные команды:
-                        - start
-                        - help
-                        - feedback
-
-                        📍 Доступные функции:
-                        - Расписание
-                        - Домашнее задание
-                        - Контроль успеваемости
-
-                                                """)
-                .build();
-    }
-
-    private BotApiMethod<?> feedback(Message message) {
-        return SendMessage
-                .builder()
-                .chatId(message.getChatId())
-                .text("""
-
-                        📍 Ссылки для обратной связи
-                        GitHub - https://github.com/Archiebalt
-                        Telegram - https://t.me/Archie1810
-
-                                                            """)
-                .disableWebPagePreview(true)
-                .build();
-    }
-
     private BotApiMethod<?> start(Message message) {
         return SendMessage
                 .builder()
                 .chatId(message.getChatId())
                 .replyMarkup(keyboardFactory.getInlineKeyboard(
-                    
-                    List.of("Помощь", "Обратная связь"),
-                    List.of(2),
-                    List.of("help", "feedback")
-                
+
+                        List.of("Помощь", "Обратная связь"),
+                        List.of(2),
+                        List.of(HELP, FEEDBACK)
+
                 ))
                 .text("""
 

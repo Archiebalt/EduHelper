@@ -7,6 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 
 import ie.arch.tutorbot.Service.factory.AnswerMethodFactory;
 import ie.arch.tutorbot.Service.factory.KeyboardFactory;
+import ie.arch.tutorbot.telegram.Bot;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -14,41 +15,40 @@ import lombok.experimental.FieldDefaults;
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
-public class FeedbackManager {
+public class FeedbackManager extends AbstractManager {
 
-    AnswerMethodFactory answerMethodFactory;
-    KeyboardFactory keyboardFactory;
+        AnswerMethodFactory answerMethodFactory;
+        KeyboardFactory keyboardFactory;
 
-    public BotApiMethod<?> answerCommand(Message message) {
+        @Override
+        public BotApiMethod<?> answerCommand(Message message, Bot bot) {
+                return answerMethodFactory.getSendMessage(
+                                message.getChatId(),
 
-        return answerMethodFactory.getSendMessage(
-                message.getChatId(),
+                                """
+                                                📍 Ссылки для обратной связи
+                                                GitHub - https://github.com/Archiebalt
+                                                Telegram - https://t.me/Archie1810
+                                                """,
+                                null);
+        }
 
-                """
-                        📍 Ссылки для обратной связи
-                        GitHub - https://github.com/Archiebalt
-                        Telegram - https://t.me/Archie1810
+        @Override
+        public BotApiMethod<?> answerCallbackQuery(CallbackQuery callbackQuery, Bot bot) {
+                return answerMethodFactory.getEditMessageText(
+                                callbackQuery,
 
-                        """,
+                                """
+                                                📍 Ссылки для обратной связи
+                                                GitHub - https://github.com/Archiebalt
+                                                Telegram - https://t.me/Archie1810
+                                                """,
+                                null);
+        }
 
-                null);
-
-    }
-
-    public BotApiMethod<?> answerCallbackQuery(CallbackQuery callbackQuery) {
-
-        return answerMethodFactory.getEditMessageText(
-                callbackQuery,
-
-                """
-                        📍 Ссылки для обратной связи
-                        GitHub - https://github.com/Archiebalt
-                        Telegram - https://t.me/Archie1810
-
-                        """,
-
-                null);
-
-    }
+        @Override
+        public BotApiMethod<?> answerMessage(Message message, Bot bot) {
+                return null;
+        }
 
 }

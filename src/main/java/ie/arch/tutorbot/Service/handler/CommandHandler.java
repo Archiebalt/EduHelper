@@ -33,15 +33,15 @@ public class CommandHandler {
 
         switch (command) {
             case START -> {
-                return startManager.answerCommand(message);
+                return startManager.answerCommand(message, bot);
             }
 
             case FEEDBACK_COMMAND -> {
-                return feedbackManager.answerCommand(message);
+                return feedbackManager.answerCommand(message, bot);
             }
 
             case HELP_COMMAND -> {
-                return helpManager.answerCommand(message);
+                return helpManager.answerCommand(message, bot);
             }
 
             default -> {

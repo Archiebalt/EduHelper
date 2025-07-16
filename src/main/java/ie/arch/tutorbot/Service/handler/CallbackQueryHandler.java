@@ -26,11 +26,11 @@ public class CallbackQueryHandler {
 
         switch (callbackData) {
             case FEEDBACK -> {
-                return feedbackManager.answerCallbackQuery(callbackQuery);
+                return feedbackManager.answerCallbackQuery(callbackQuery, bot);
             }
 
             case HELP -> {
-                return helpManager.answerCallbackQuery(callbackQuery);
+                return helpManager.answerCallbackQuery(callbackQuery, bot);
             }
         }
 

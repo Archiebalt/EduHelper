@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
-import ie.arch.tutorbot.Service.manager.FeedbackManager;
-import ie.arch.tutorbot.Service.manager.HelpManager;
+import ie.arch.tutorbot.Service.manager.feedback.FeedbackManager;
+import ie.arch.tutorbot.Service.manager.help.HelpManager;
 import ie.arch.tutorbot.telegram.Bot;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

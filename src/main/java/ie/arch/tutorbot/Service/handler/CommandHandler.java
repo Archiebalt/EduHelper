@@ -9,9 +9,9 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import ie.arch.tutorbot.Service.manager.FeedbackManager;
-import ie.arch.tutorbot.Service.manager.HelpManager;
-import ie.arch.tutorbot.Service.manager.StartManager;
+import ie.arch.tutorbot.Service.manager.feedback.FeedbackManager;
+import ie.arch.tutorbot.Service.manager.help.HelpManager;
+import ie.arch.tutorbot.Service.manager.start.StartManager;
 import ie.arch.tutorbot.telegram.Bot;
 
 import static ie.arch.tutorbot.Service.data.Command.*;

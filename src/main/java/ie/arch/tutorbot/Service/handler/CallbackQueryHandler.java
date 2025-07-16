@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
 import ie.arch.tutorbot.Service.manager.feedback.FeedbackManager;
 import ie.arch.tutorbot.Service.manager.help.HelpManager;
+import ie.arch.tutorbot.Service.manager.timetable.TimetableManager;
 import ie.arch.tutorbot.telegram.Bot;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +20,18 @@ import static ie.arch.tutorbot.Service.data.CallbackData.*;
 public class CallbackQueryHandler {
 
     HelpManager helpManager;
+
     FeedbackManager feedbackManager;
+
+    TimetableManager timeTableManager;
 
     public BotApiMethod<?> answer(CallbackQuery callbackQuery, Bot bot) {
         String callbackData = callbackQuery.getData();
+        String keyword = callbackData.split("_")[0];
+
+        if (TIMETABLE.equals(keyword)) {
+            return timeTableManager.answerCallbackQuery(callbackQuery, bot);
+        }
 
         switch (callbackData) {
             case FEEDBACK -> {

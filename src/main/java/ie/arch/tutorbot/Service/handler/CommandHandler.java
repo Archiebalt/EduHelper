@@ -12,6 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import ie.arch.tutorbot.Service.manager.feedback.FeedbackManager;
 import ie.arch.tutorbot.Service.manager.help.HelpManager;
 import ie.arch.tutorbot.Service.manager.start.StartManager;
+import ie.arch.tutorbot.Service.manager.timetable.TimetableManager;
 import ie.arch.tutorbot.telegram.Bot;
 
 import static ie.arch.tutorbot.Service.data.Command.*;
@@ -26,6 +27,8 @@ public class CommandHandler {
     FeedbackManager feedbackManager;
 
     HelpManager helpManager;
+
+    TimetableManager timeTableManager;
 
     public BotApiMethod<?> answer(Message message, Bot bot) {
 
@@ -42,6 +45,10 @@ public class CommandHandler {
 
             case HELP_COMMAND -> {
                 return helpManager.answerCommand(message, bot);
+            }
+
+            case TIMETABLE -> {
+                return timeTableManager.answerCommand(message, bot);
             }
 
             default -> {

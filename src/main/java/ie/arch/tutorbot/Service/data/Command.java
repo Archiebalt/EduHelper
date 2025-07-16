@@ -10,4 +10,6 @@ public class Command {
     
     public static final String TIMETABLE = "/timetable";
 
+    public static final String TASK = "/task";
+
 }

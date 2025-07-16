@@ -1,18 +1,20 @@
 package ie.arch.tutorbot.Service.handler;
 
+import static ie.arch.tutorbot.Service.data.CallbackData.*;
+
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
 import ie.arch.tutorbot.Service.manager.feedback.FeedbackManager;
 import ie.arch.tutorbot.Service.manager.help.HelpManager;
+import ie.arch.tutorbot.Service.manager.task.TaskManager;
 import ie.arch.tutorbot.Service.manager.timetable.TimetableManager;
 import ie.arch.tutorbot.telegram.Bot;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
-import static ie.arch.tutorbot.Service.data.CallbackData.*;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -25,12 +27,18 @@ public class CallbackQueryHandler {
 
     TimetableManager timeTableManager;
 
+    TaskManager taskManager;
+
     public BotApiMethod<?> answer(CallbackQuery callbackQuery, Bot bot) {
         String callbackData = callbackQuery.getData();
         String keyword = callbackData.split("_")[0];
 
         if (TIMETABLE.equals(keyword)) {
             return timeTableManager.answerCallbackQuery(callbackQuery, bot);
+        }
+
+        if (TASK.equals(keyword)) {
+            return taskManager.answerCallbackQuery(callbackQuery, bot);
         }
 
         switch (callbackData) {

@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
 import ie.arch.tutorbot.Service.manager.feedback.FeedbackManager;
 import ie.arch.tutorbot.Service.manager.help.HelpManager;
+import ie.arch.tutorbot.Service.manager.progress_control.ProgressControlManager;
 import ie.arch.tutorbot.Service.manager.task.TaskManager;
 import ie.arch.tutorbot.Service.manager.timetable.TimetableManager;
 import ie.arch.tutorbot.telegram.Bot;
@@ -29,6 +30,8 @@ public class CallbackQueryHandler {
 
     TaskManager taskManager;
 
+    ProgressControlManager progressControlManager;
+
     public BotApiMethod<?> answer(CallbackQuery callbackQuery, Bot bot) {
         String callbackData = callbackQuery.getData();
         String keyword = callbackData.split("_")[0];
@@ -39,6 +42,10 @@ public class CallbackQueryHandler {
 
         if (TASK.equals(keyword)) {
             return taskManager.answerCallbackQuery(callbackQuery, bot);
+        }
+        
+        if (PROGRESS.equals(keyword)) {
+            return progressControlManager.answerCallbackQuery(callbackQuery, bot);
         }
 
         switch (callbackData) {

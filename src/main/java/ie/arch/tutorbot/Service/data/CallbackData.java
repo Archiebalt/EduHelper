@@ -18,4 +18,8 @@ public class CallbackData {
 
     public static final String TASK_CREATE = "task_create";
 
+    public static final String PROGRESS = "progress";
+
+    public static final String PROGRESS_STAT = "progress_stat";
+
 }

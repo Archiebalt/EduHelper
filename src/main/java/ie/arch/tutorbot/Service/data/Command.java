@@ -12,4 +12,6 @@ public class Command {
 
     public static final String TASK = "/task";
 
+    public static final String PROGRESS = "/progress";
+
 }

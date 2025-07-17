@@ -11,6 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 
 import ie.arch.tutorbot.Service.manager.feedback.FeedbackManager;
 import ie.arch.tutorbot.Service.manager.help.HelpManager;
+import ie.arch.tutorbot.Service.manager.progress_control.ProgressControlManager;
 import ie.arch.tutorbot.Service.manager.start.StartManager;
 import ie.arch.tutorbot.Service.manager.task.TaskManager;
 import ie.arch.tutorbot.Service.manager.timetable.TimetableManager;
@@ -32,6 +33,8 @@ public class CommandHandler {
     TimetableManager timeTableManager;
 
     TaskManager taskManager;
+
+    ProgressControlManager progressControlManager;
 
     public BotApiMethod<?> answer(Message message, Bot bot) {
 
@@ -56,6 +59,10 @@ public class CommandHandler {
 
             case TASK -> {
                 return taskManager.answerCommand(message, bot);
+            }
+
+            case PROGRESS -> {
+                return progressControlManager.answerCommand(message, bot);
             }
 
             default -> {

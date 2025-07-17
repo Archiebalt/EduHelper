@@ -1,23 +1,23 @@
-package ie.arch.tutorbot.Service.handler;
+package ie.arch.tutorbot.service.handler;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
+import static ie.arch.tutorbot.service.data.Command.*;
 
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import ie.arch.tutorbot.Service.manager.feedback.FeedbackManager;
-import ie.arch.tutorbot.Service.manager.help.HelpManager;
-import ie.arch.tutorbot.Service.manager.progress_control.ProgressControlManager;
-import ie.arch.tutorbot.Service.manager.start.StartManager;
-import ie.arch.tutorbot.Service.manager.task.TaskManager;
-import ie.arch.tutorbot.Service.manager.timetable.TimetableManager;
+import ie.arch.tutorbot.service.manager.feedback.FeedbackManager;
+import ie.arch.tutorbot.service.manager.help.HelpManager;
+import ie.arch.tutorbot.service.manager.progress_control.ProgressControlManager;
+import ie.arch.tutorbot.service.manager.start.StartManager;
+import ie.arch.tutorbot.service.manager.task.TaskManager;
+import ie.arch.tutorbot.service.manager.timetable.TimetableManager;
 import ie.arch.tutorbot.telegram.Bot;
-
-import static ie.arch.tutorbot.Service.data.Command.*;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)

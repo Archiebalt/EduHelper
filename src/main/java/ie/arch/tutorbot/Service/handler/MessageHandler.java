@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.Service.handler;
+package ie.arch.tutorbot.service.handler;
 
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;

@@ -1,13 +1,13 @@
-package ie.arch.tutorbot.Service;
+package ie.arch.tutorbot.service;
 
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import ie.arch.tutorbot.Service.handler.CallbackQueryHandler;
-import ie.arch.tutorbot.Service.handler.CommandHandler;
-import ie.arch.tutorbot.Service.handler.MessageHandler;
+import ie.arch.tutorbot.service.handler.CallbackQueryHandler;
+import ie.arch.tutorbot.service.handler.CommandHandler;
+import ie.arch.tutorbot.service.handler.MessageHandler;
 import ie.arch.tutorbot.telegram.Bot;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

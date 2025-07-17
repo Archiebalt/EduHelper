@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.Service.factory;
+package ie.arch.tutorbot.service.factory;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

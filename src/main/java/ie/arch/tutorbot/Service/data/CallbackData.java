@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.Service.data;
+package ie.arch.tutorbot.service.data;
 
 public class CallbackData {
 

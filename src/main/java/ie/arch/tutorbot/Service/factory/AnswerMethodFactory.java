@@ -31,6 +31,7 @@ public class AnswerMethodFactory {
                 .chatId(callbackQuery.getMessage().getChatId())
                 .messageId(callbackQuery.getMessage().getMessageId())
                 .text(text)
+                .replyMarkup(keyboard)
                 .disableWebPagePreview(true)
                 .build();
 

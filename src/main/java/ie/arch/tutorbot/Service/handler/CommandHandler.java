@@ -72,26 +72,6 @@ public class CommandHandler {
 
     }
 
-    private BotApiMethod<?> start(Message message) {
-
-        return SendMessage
-                .builder()
-                .chatId(message.getChatId())
-                .text("""
-
-                            🖖Приветствую в Tutor-Bot, инструменте для упрощения взаимодействия репититора и ученика.
-
-                            Что бот умеет?
-                            📌 Составлять расписание
-                            📌 Прикреплять домашние задания
-                            📌 Ввести контроль успеваемости
-
-                        """)
-
-                .build();
-
-    }
-
     private BotApiMethod<?> defaultAnswer(Message message) {
         return SendMessage
                 .builder()

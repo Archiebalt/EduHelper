@@ -23,7 +23,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "timetable")
+@Table(name = "tasks")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Task {
 
@@ -35,7 +35,7 @@ public class Task {
     @Column(name = "title")
     String title;
 
-    @Column(name = "title")
+    @Column(name = "text_content")
     String textContent;
 
     @Column(name = "actual_message_id")

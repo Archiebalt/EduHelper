@@ -18,9 +18,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Aspect
+@Order(10)
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
@@ -37,9 +39,7 @@ public class UserCreationAspect {
 
     @Around("distributeMethodPointcut()")
     public Object distributeMethodAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
-
-        Object[] args = joinPoint.getArgs();
-        Update update = (Update) args[0];
+        Update update = (Update) joinPoint.getArgs()[0];
         User telegramUser;
 
         if (update.hasMessage()) {
@@ -75,7 +75,6 @@ public class UserCreationAspect {
         userRepo.save(newUser);
 
         return joinPoint.proceed();
-
     }
 
 }

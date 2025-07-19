@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
+import ie.arch.tutorbot.service.manager.auth.AuthManager;
 import ie.arch.tutorbot.service.manager.feedback.FeedbackManager;
 import ie.arch.tutorbot.service.manager.help.HelpManager;
 import ie.arch.tutorbot.service.manager.progress_control.ProgressControlManager;
 import ie.arch.tutorbot.service.manager.task.TaskManager;
 import ie.arch.tutorbot.service.manager.timetable.TimetableManager;
 import ie.arch.tutorbot.telegram.Bot;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -31,6 +33,8 @@ public class CallbackQueryHandler {
 
     ProgressControlManager progressControlManager;
 
+    AuthManager authManager;
+
     public BotApiMethod<?> answer(CallbackQuery callbackQuery, Bot bot) {
         String callbackData = callbackQuery.getData();
         String keyword = callbackData.split("_")[0];
@@ -42,9 +46,13 @@ public class CallbackQueryHandler {
         if (TASK.equals(keyword)) {
             return taskManager.answerCallbackQuery(callbackQuery, bot);
         }
-        
+
         if (PROGRESS.equals(keyword)) {
             return progressControlManager.answerCallbackQuery(callbackQuery, bot);
+        }
+
+        if (AUTH.equals(keyword)) {
+            return authManager.answerCallbackQuery(callbackQuery, bot);
         }
 
         switch (callbackData) {

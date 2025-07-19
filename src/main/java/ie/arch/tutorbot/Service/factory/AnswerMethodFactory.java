@@ -1,6 +1,8 @@
 package ie.arch.tutorbot.service.factory;
 
 import org.springframework.stereotype.Component;
+
+import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
@@ -9,7 +11,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 
 @Component
-
 public class AnswerMethodFactory {
 
     public SendMessage getSendMessage(Long chatId, String text, ReplyKeyboard keyboard) {
@@ -45,6 +46,14 @@ public class AnswerMethodFactory {
                 .messageId(messageId)
                 .build();
 
+    }
+
+    public AnswerCallbackQuery getAnswerCallbackQuery(String callbackQueryId, String text) {
+        return AnswerCallbackQuery
+                .builder()
+                .callbackQueryId(callbackQueryId)
+                .text(text)
+                .build();
     }
 
 }

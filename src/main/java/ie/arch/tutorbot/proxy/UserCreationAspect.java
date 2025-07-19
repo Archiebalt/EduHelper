@@ -68,7 +68,7 @@ public class UserCreationAspect {
 
                 .chatId(telegramUser.getId())
                 .action(Action.FREE)
-                .role(Role.USER)
+                .role(Role.EMPTY)
                 .details(details)
                 .build();
 

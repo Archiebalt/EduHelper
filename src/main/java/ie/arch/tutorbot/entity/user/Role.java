@@ -1,6 +1,8 @@
 package ie.arch.tutorbot.entity.user;
 
 public enum Role {
-    USER,
-    ADMIN
+    STUDENT,
+    TEACHER,
+    ADMIN,
+    EMPTY
 }

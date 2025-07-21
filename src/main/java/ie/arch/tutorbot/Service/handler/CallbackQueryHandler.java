@@ -9,7 +9,9 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ie.arch.tutorbot.service.manager.auth.AuthManager;
 import ie.arch.tutorbot.service.manager.feedback.FeedbackManager;
 import ie.arch.tutorbot.service.manager.help.HelpManager;
+import ie.arch.tutorbot.service.manager.profile.ProfileManager;
 import ie.arch.tutorbot.service.manager.progress_control.ProgressControlManager;
+import ie.arch.tutorbot.service.manager.search.SearchManager;
 import ie.arch.tutorbot.service.manager.task.TaskManager;
 import ie.arch.tutorbot.service.manager.timetable.TimetableManager;
 import ie.arch.tutorbot.telegram.Bot;
@@ -35,6 +37,10 @@ public class CallbackQueryHandler {
 
     AuthManager authManager;
 
+    ProfileManager profileManager;
+
+    SearchManager searchManager;
+
     public BotApiMethod<?> answer(CallbackQuery callbackQuery, Bot bot) {
         String callbackData = callbackQuery.getData();
         String keyword = callbackData.split("_")[0];
@@ -55,6 +61,14 @@ public class CallbackQueryHandler {
             return authManager.answerCallbackQuery(callbackQuery, bot);
         }
 
+        if (PROFILE.equals(keyword)) {
+            return profileManager.answerCallbackQuery(callbackQuery, bot);
+        }
+
+        if (SEARCH.equals(keyword)) {
+            return searchManager.answerCallbackQuery(callbackQuery, bot);
+        }
+
         switch (callbackData) {
             case FEEDBACK -> {
                 return feedbackManager.answerCallbackQuery(callbackQuery, bot);
@@ -67,5 +81,4 @@ public class CallbackQueryHandler {
 
         return null;
     }
-
 }

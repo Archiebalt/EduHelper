@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.Service.factory;
+package ie.arch.tutorbot.service.factory;
 
 import java.util.ArrayList;
 import java.util.List;

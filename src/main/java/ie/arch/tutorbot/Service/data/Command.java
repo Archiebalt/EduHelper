@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.Service.data;
+package ie.arch.tutorbot.service.data;
 
 public class Command {
 
@@ -13,5 +13,9 @@ public class Command {
     public static final String TASK = "/task";
 
     public static final String PROGRESS = "/progress";
+
+    public static final String PROFILE = "/profile";
+
+    public static final String SEARCH = "/search";
 
 }

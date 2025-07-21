@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.Service.manager;
+package ie.arch.tutorbot.service.manager;
 
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;

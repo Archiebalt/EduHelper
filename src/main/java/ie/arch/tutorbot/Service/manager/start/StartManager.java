@@ -1,4 +1,6 @@
-package ie.arch.tutorbot.Service.manager.start;
+package ie.arch.tutorbot.service.manager.start;
+
+import static ie.arch.tutorbot.service.data.CallbackData.*;
 
 import java.util.List;
 
@@ -8,13 +10,10 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import ie.arch.tutorbot.Service.factory.AnswerMethodFactory;
-import ie.arch.tutorbot.Service.factory.KeyboardFactory;
-import ie.arch.tutorbot.Service.manager.AbstractManager;
+import ie.arch.tutorbot.service.factory.AnswerMethodFactory;
+import ie.arch.tutorbot.service.factory.KeyboardFactory;
+import ie.arch.tutorbot.service.manager.AbstractManager;
 import ie.arch.tutorbot.telegram.Bot;
-
-import static ie.arch.tutorbot.Service.data.CallbackData.*;
-
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

@@ -2,7 +2,9 @@ package ie.arch.tutorbot.service.manager.timetable;
 
 import static ie.arch.tutorbot.service.data.CallbackData.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -47,8 +49,24 @@ public class TimetableManager extends AbstractManager {
 
     @Override
     public BotApiMethod<?> answerCallbackQuery(CallbackQuery callbackQuery, Bot bot) {
-
         String callbackData = callbackQuery.getData();
+        String[] splitCallbackData = callbackData.split("_");
+
+        if (splitCallbackData.length > 1 && "add".equals(splitCallbackData[1])) {
+            if (splitCallbackData.length == 2 || splitCallbackData.length == 3) {
+                return add(callbackQuery, splitCallbackData);
+            }
+
+            switch (splitCallbackData[2]) {
+                case WEEKDAY -> {
+                    return addWeekDay(callbackQuery, splitCallbackData);
+                }
+
+                case HOUR -> {
+                    return null;
+                }
+            }
+        }
 
         switch (callbackData) {
             case TIMETABLE -> {
@@ -63,10 +81,6 @@ public class TimetableManager extends AbstractManager {
                 return remove(callbackQuery);
             }
 
-            case TIMETABLE_ADD -> {
-                return add(callbackQuery);
-            }
-
             case TIMETABLE_1, TIMETABLE_2,
                     TIMETABLE_3, TIMETABLE_4,
                     TIMETABLE_5, TIMETABLE_6,
@@ -77,6 +91,38 @@ public class TimetableManager extends AbstractManager {
         }
 
         return null;
+    }
+
+    private BotApiMethod<?> addWeekDay(CallbackQuery callbackQuery, String[] data) {
+        UUID id = UUID.fromString(data[4]);
+        var timetable = timetableRepo.findTimetableById(id);
+
+        switch (data[3]) {
+            case "1" -> timetable.setWeekDay(WeekDay.MONDAY);
+            case "2" -> timetable.setWeekDay(WeekDay.TUESDAY);
+            case "3" -> timetable.setWeekDay(WeekDay.WEDNESDAY);
+            case "4" -> timetable.setWeekDay(WeekDay.THURSDAY);
+            case "5" -> timetable.setWeekDay(WeekDay.FRIDAY);
+            case "6" -> timetable.setWeekDay(WeekDay.SATURDAY);
+            case "7" -> timetable.setWeekDay(WeekDay.SUNDAY);
+        }
+
+        List<String> buttonsData = new ArrayList<>();
+        List<String> text = new ArrayList<>();
+        for (int i = 1; i <= 24; i++) {
+            text.add(String.valueOf(i));
+            buttonsData.add(TIMETABLE_ADD_HOUR + i + "_" + data[4]);
+        }
+
+        buttonsData.add(TIMETABLE_ADD + "_" + data[4]);
+        text.add("Назад");
+        return methodFactory.getEditMessageText(
+                callbackQuery,
+                "Выберете час",
+                keyboardFactory.getInlineKeyboard(
+                        text,
+                        List.of(6, 6, 6, 6, 1),
+                        buttonsData));
     }
 
     private BotApiMethod<?> showDay(CallbackQuery callbackQuery) {
@@ -92,7 +138,7 @@ public class TimetableManager extends AbstractManager {
             case "7" -> weekDay = WeekDay.SUNDAY;
         }
 
-        List<Timetable> timetableList = timetableRepo.findAllByUsersContainingAndWeekday(user, weekDay);
+        List<Timetable> timetableList = timetableRepo.findAllByUsersContainingAndWeekDay(user, weekDay);
         StringBuilder text = new StringBuilder();
 
         if (timetableList == null || timetableList.isEmpty()) {
@@ -173,15 +219,33 @@ public class TimetableManager extends AbstractManager {
                         List.of(TIMETABLE_SHOW, TIMETABLE_REMOVE, TIMETABLE_ADD)));
     }
 
-    private BotApiMethod<?> add(CallbackQuery callbackQuery) {
+    private BotApiMethod<?> add(CallbackQuery callbackQuery, String[] splitCallbackData) {
+        String id;
+
+        if (splitCallbackData.length == 2) {
+            Timetable timetable = Timetable.builder()
+                    .users(List.of(userRepo.findUserByChatId(callbackQuery.getMessage().getChatId())))
+                    .build();
+            id = timetableRepo.save(timetable).getId().toString();
+        } else {
+            id = splitCallbackData[2];
+        }
+
+        List<String> data = new ArrayList<>();
+
+        for (int i = 1; i <= 7; i++) {
+            data.add(TIMETABLE_ADD_WEEKDAY + i + "_" + id);
+        }
+
+        data.add(TIMETABLE);
         return methodFactory.getEditMessageText(callbackQuery,
                 """
                         ✏️ Выберете день, в который хотите добавить занятие:
                         """,
                 keyboardFactory.getInlineKeyboard(
-                        List.of("Назад"),
-                        List.of(1),
-                        List.of(TIMETABLE)));
+                        List.of("ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС", "Назад"),
+                        List.of(7, 1),
+                        data));
     }
 
     private BotApiMethod<?> remove(CallbackQuery callbackQuery) {
@@ -206,7 +270,12 @@ public class TimetableManager extends AbstractManager {
                                 "Назад"),
                         List.of(7, 1),
                         List.of(
-                                TIMETABLE_1, TIMETABLE_2, TIMETABLE_3, TIMETABLE_4, TIMETABLE_5, TIMETABLE_6,
+                                TIMETABLE_1,
+                                TIMETABLE_2,
+                                TIMETABLE_3,
+                                TIMETABLE_4,
+                                TIMETABLE_5,
+                                TIMETABLE_6,
                                 TIMETABLE_7,
                                 TIMETABLE)));
     }

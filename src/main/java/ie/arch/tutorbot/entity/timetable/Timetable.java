@@ -51,15 +51,17 @@ public class Timetable {
     @Column(name = "hour")
     Short hour;
 
+    @Column(name = "in_creation")
+    Boolean inCreation;
+
     @Column(name = "minute")
     Short minute;
 
     @ManyToMany
     @JoinTable(
-        joinColumns = @JoinColumn(name = "timetable_id"),
+        joinColumns = @JoinColumn(name = "timetable_id"), 
         inverseJoinColumns = @JoinColumn(name = "user_id"),
-        name = "users_timetable"
-    )
+        name = "users_timetable")
     List<User> users;
 
 }

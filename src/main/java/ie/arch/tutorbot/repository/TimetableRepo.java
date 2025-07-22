@@ -13,6 +13,8 @@ import ie.arch.tutorbot.entity.user.User;
 @Repository
 public interface TimetableRepo extends JpaRepository<Timetable, UUID> {
 
-    List<Timetable> findAllByUsersContainingAndWeekday(User user, WeekDay weekDay);
+    List<Timetable> findAllByUsersContainingAndWeekDay(User user, WeekDay weekDay);
+
+    Timetable findTimetableById(UUID id);
 
 }

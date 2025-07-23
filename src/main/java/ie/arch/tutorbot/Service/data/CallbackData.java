@@ -26,15 +26,39 @@ public class CallbackData {
 
     public static final String WEEKDAY = "weekday";
 
+    public static final String MINUTE = "minute";
+
+    public static final String TIMETABLE_ADD_MINUTE = "timetable_add_minute_";
+
     public static final String HOUR = "hour";
 
     public static final String TIMETABLE_ADD_HOUR = "timetable_add_hour_";
+
+    public static final String USER = "user";
+
+    public static final String TIMETABLE_ADD_USER = "timetable_add_user_";
 
     public static final String TIMETABLE_SHOW = "timetable_show";
 
     public static final String TIMETABLE_ADD = "timetable_add";
 
     public static final String TIMETABLE_REMOVE = "timetable_remove";
+
+    public static final String TIMETABLE_ADD_TITLE = "timetable_add_title_";
+
+    public static final String TITLE = "title";
+
+    public static final String TIMETABLE_ADD_DESCRIPTION = "timetable_add_description_";
+
+    public static final String DESCRIPTION = "description";
+
+    public static final String TIMETABLE_BACK = "timetable_back_";
+
+    public static final String TIMETABLE_FINISH = "timetable_finish_";
+
+    public static final String BACK = "back";
+
+    public static final String FINISH = "finish";
 
     public static final String TASK = "task";
 

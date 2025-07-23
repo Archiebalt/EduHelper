@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 
 import ie.arch.tutorbot.repository.UserRepo;
 import ie.arch.tutorbot.service.manager.search.SearchManager;
+import ie.arch.tutorbot.service.manager.timetable.TimetableManager;
 import ie.arch.tutorbot.telegram.Bot;
 
 import lombok.AccessLevel;
@@ -18,7 +19,10 @@ import lombok.experimental.FieldDefaults;
 public class MessageHandler {
 
     SearchManager searchManager;
+
     UserRepo userRepo;
+
+    TimetableManager timetableManager;
 
     public BotApiMethod<?> answer(Message message, Bot bot) {
         var user = userRepo.findUserByChatId(message.getChatId());
@@ -26,6 +30,10 @@ public class MessageHandler {
         switch (user.getAction()) {
             case SENDING_TOKEN -> {
                 return searchManager.answerMessage(message, bot);
+            }
+
+            case SENDING_TITLE, SENDING_DESCRIPTION -> {
+                return timetableManager.answerMessage(message, bot);
             }
 
             default -> {

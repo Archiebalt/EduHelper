@@ -1,5 +1,6 @@
 package ie.arch.tutorbot.entity.timetable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,10 +59,15 @@ public class Timetable {
     Short minute;
 
     @ManyToMany
-    @JoinTable(
-        joinColumns = @JoinColumn(name = "timetable_id"), 
-        inverseJoinColumns = @JoinColumn(name = "user_id"),
-        name = "users_timetable")
+    @JoinTable(joinColumns = @JoinColumn(name = "timetable_id"), inverseJoinColumns = @JoinColumn(name = "user_id"), name = "users_timetable")
     List<User> users;
+
+    public void addUser(User user) {
+        if (users == null) {
+            users = new ArrayList<>();
+        }
+        
+        users.add(user);
+    }
 
 }

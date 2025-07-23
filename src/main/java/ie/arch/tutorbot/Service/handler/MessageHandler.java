@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 
 import ie.arch.tutorbot.repository.UserRepo;
 import ie.arch.tutorbot.service.manager.search.SearchManager;
+import ie.arch.tutorbot.service.manager.task.TaskManager;
 import ie.arch.tutorbot.service.manager.timetable.TimetableManager;
 import ie.arch.tutorbot.telegram.Bot;
 
@@ -24,6 +25,8 @@ public class MessageHandler {
 
     TimetableManager timetableManager;
 
+    TaskManager taskManager;
+
     public BotApiMethod<?> answer(Message message, Bot bot) {
         var user = userRepo.findUserByChatId(message.getChatId());
 
@@ -34,6 +37,10 @@ public class MessageHandler {
 
             case SENDING_TITLE, SENDING_DESCRIPTION -> {
                 return timetableManager.answerMessage(message, bot);
+            }
+
+            case SENDING_TASK -> {
+                return taskManager.answerMessage(message, bot);
             }
 
             default -> {

@@ -1,12 +1,17 @@
 package ie.arch.tutorbot.entity.task;
 
+import java.util.List;
 import java.util.UUID;
 
+import ie.arch.tutorbot.entity.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
@@ -40,5 +45,16 @@ public class Task {
 
     @Column(name = "actual_message_id")
     Integer messageId;
+
+    @Column(name = "in_creation")
+    Boolean isInCreation;
+
+    @ManyToMany
+    @JoinTable(
+        joinColumns = @JoinColumn(name = "task_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id"),
+        name = "tasks_teacher_student"
+    )
+    List<User> users;
 
 }

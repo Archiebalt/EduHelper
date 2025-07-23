@@ -44,6 +44,18 @@ public class CallbackData {
 
     public static final String TIMETABLE_REMOVE = "timetable_remove";
 
+    public static final String REMOVE = "remove";
+
+    public static final String TIMETABLE_REMOVE_WEEKDAY = "timetable_remove_weekday_";
+
+    public static final String TIMETABLE_REMOVE_POS = "timetable_remove_pos_";
+
+    public static final String TIMETABLE_REMOVE_FINAL = "timetable_remove_final_";
+
+    public static final String FINAL = "final";
+
+    public static final String POS = "pos";
+
     public static final String TIMETABLE_ADD_TITLE = "timetable_add_title_";
 
     public static final String TITLE = "title";

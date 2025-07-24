@@ -4,7 +4,6 @@ import static ie.arch.tutorbot.service.data.CallbackData.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -81,6 +80,7 @@ public class TimetableManager extends AbstractManager {
         String[] splitCallbackData = callbackData.split("_");
 
         if (splitCallbackData.length > 1 && "add".equals(splitCallbackData[1])) {
+
             if (splitCallbackData.length == 2 || splitCallbackData.length == 3) {
                 return add(callbackQuery, splitCallbackData);
             }
@@ -89,57 +89,37 @@ public class TimetableManager extends AbstractManager {
                 case WEEKDAY -> {
                     return addWeekDay(callbackQuery, splitCallbackData);
                 }
-
                 case HOUR -> {
                     return addHour(callbackQuery, splitCallbackData);
                 }
-
                 case MINUTE -> {
                     return addMinute(callbackQuery, splitCallbackData);
                 }
-
                 case USER -> {
                     return addUser(callbackQuery, splitCallbackData);
                 }
-
                 case TITLE -> {
                     return askTitle(callbackQuery, splitCallbackData);
                 }
-
                 case DESCRIPTION -> {
                     return askDescription(callbackQuery, splitCallbackData);
                 }
             }
-        }
 
-        if (FINISH.equals(splitCallbackData[1])) {
-            try {
-                return finish(callbackQuery, splitCallbackData, bot);
-            } catch (TelegramApiException exc) {
-                log.error(exc.getMessage());
-            }
-        }
-
-        if (BACK.equals(splitCallbackData[1])) {
-            return back(callbackQuery, splitCallbackData);
         }
 
         switch (callbackData) {
             case TIMETABLE -> {
                 return mainMenu(callbackQuery);
             }
-
             case TIMETABLE_SHOW -> {
                 return show(callbackQuery);
             }
-
             case TIMETABLE_REMOVE -> {
                 return remove(callbackQuery);
             }
-
-            case TIMETABLE_1, TIMETABLE_2,
-                    TIMETABLE_3, TIMETABLE_4,
-                    TIMETABLE_5, TIMETABLE_6,
+            case TIMETABLE_1, TIMETABLE_2, TIMETABLE_3,
+                    TIMETABLE_4, TIMETABLE_5, TIMETABLE_6,
                     TIMETABLE_7 -> {
                 return showDay(callbackQuery);
             }
@@ -148,8 +128,8 @@ public class TimetableManager extends AbstractManager {
         if (FINISH.equals(splitCallbackData[1])) {
             try {
                 return finish(callbackQuery, splitCallbackData, bot);
-            } catch (TelegramApiException exc) {
-                log.error(exc.getMessage());
+            } catch (TelegramApiException e) {
+                log.error(e.getMessage());
             }
         }
 
@@ -162,16 +142,14 @@ public class TimetableManager extends AbstractManager {
                 case WEEKDAY -> {
                     return removeWeekday(callbackQuery, splitCallbackData[3]);
                 }
-
                 case POS -> {
                     return askConfirmation(callbackQuery, splitCallbackData);
                 }
-
                 case FINAL -> {
                     try {
                         return deleteTimetable(callbackQuery, splitCallbackData[3], bot);
-                    } catch (TelegramApiException exc) {
-                        log.error(exc.getMessage());
+                    } catch (TelegramApiException e) {
+                        log.error(e.getMessage());
                     }
                 }
             }
@@ -183,7 +161,8 @@ public class TimetableManager extends AbstractManager {
     private BotApiMethod<?> deleteTimetable(CallbackQuery callbackQuery, String id, Bot bot)
             throws TelegramApiException {
 
-        var timetable = timetableRepo.findTimetableById(UUID.fromString(id));
+        List<Timetable> possibleMatches = timetableRepo.findByIdStartingWith(id);
+        var timetable = possibleMatches.get(0);
         timetable.setUsers(null);
         timetableRepo.delete(timetable);
         bot.execute(methodFactory.getAnswerCallbackQuery(callbackQuery.getId(),
@@ -277,7 +256,8 @@ public class TimetableManager extends AbstractManager {
         user.setAction(Action.FREE);
         userRepo.save(user);
         String id = user.getDetails().getTimetableId();
-        var timetable = timetableRepo.findTimetableById(UUID.fromString(id));
+        List<Timetable> possibleMatches = timetableRepo.findByIdStartingWith(id);
+        var timetable = possibleMatches.get(0);
         timetable.setDescription(message.getText());
         timetableRepo.save(timetable);
 
@@ -288,7 +268,8 @@ public class TimetableManager extends AbstractManager {
         user.setAction(Action.FREE);
         userRepo.save(user);
         String id = user.getDetails().getTimetableId();
-        var timetable = timetableRepo.findTimetableById(UUID.fromString(id));
+        List<Timetable> possibleMatches = timetableRepo.findByIdStartingWith(id);
+        var timetable = possibleMatches.get(0);
         timetable.setTitle(message.getText());
         timetableRepo.save(timetable);
 
@@ -310,7 +291,7 @@ public class TimetableManager extends AbstractManager {
     }
 
     private BotApiMethod<?> back(CallbackQuery callbackQuery, String[] splitCallbackData) {
-        String id = splitCallbackData[2];
+        String id = splitCallbackData[4];
         var user = userRepo.findUserByChatId(callbackQuery.getMessage().getChatId());
         user.setAction(Action.FREE);
         userRepo.save(user);
@@ -330,7 +311,10 @@ public class TimetableManager extends AbstractManager {
 
     private BotApiMethod<?> finish(CallbackQuery callbackQuery, String[] splitCallbackData, Bot bot)
             throws TelegramApiException {
-        var timetable = timetableRepo.findTimetableById(UUID.fromString(splitCallbackData[2]));
+        String id = splitCallbackData[2];
+        List<Timetable> possibleMatches = timetableRepo.findByIdStartingWith(id);
+        var timetable = possibleMatches.get(0);
+
         timetable.setInCreation(false);
         timetableRepo.save(timetable);
 
@@ -343,7 +327,8 @@ public class TimetableManager extends AbstractManager {
 
     private BotApiMethod<?> addUser(CallbackQuery callbackQuery, String[] splitCallbackData) {
         String id = splitCallbackData[4];
-        var timetable = timetableRepo.findTimetableById(UUID.fromString(id));
+        List<Timetable> possibleMatches = timetableRepo.findByIdStartingWith(id);
+        var timetable = possibleMatches.get(0);
         var user = userRepo.findUserByChatId(Long.valueOf(splitCallbackData[3]));
         timetable.addUser(user);
         timetable.setTitle(user.getDetails().getFirstname());
@@ -351,11 +336,10 @@ public class TimetableManager extends AbstractManager {
 
         return methodFactory.getEditMessageText(
                 callbackQuery,
-                "Успешно! Запись добавлена. Настройте заголовок и описание",
+                "Успешно! Запись добавлена, теперь вы можете настроить описание и заголовок",
                 keyboardFactory.getInlineKeyboard(
-                        List.of("Изменить загаловок",
-                                "Изменить описание",
-                                "Завершить"),
+                        List.of("Изменить заголовок", "Изменить описание",
+                                "Завершить создание"),
                         List.of(2, 1),
                         List.of(TIMETABLE_ADD_TITLE + id,
                                 TIMETABLE_ADD_DESCRIPTION + id,
@@ -364,7 +348,8 @@ public class TimetableManager extends AbstractManager {
 
     private BotApiMethod<?> addMinute(CallbackQuery callbackQuery, String[] splitCallbackData) {
         String id = splitCallbackData[4];
-        var timetable = timetableRepo.findTimetableById(UUID.fromString(id));
+        List<Timetable> possibleMatches = timetableRepo.findByIdStartingWith(id);
+        var timetable = possibleMatches.get(0);
         List<String> text = new ArrayList<>();
         List<String> data = new ArrayList<>();
         List<Integer> cfg = new ArrayList<>();
@@ -406,17 +391,18 @@ public class TimetableManager extends AbstractManager {
 
     private BotApiMethod<?> addHour(CallbackQuery callbackQuery, String[] splitCallbackData) {
         String id = splitCallbackData[4];
-        var timetable = timetableRepo.findTimetableById(UUID.fromString(id));
+        List<Timetable> possibleMatches = timetableRepo.findByIdStartingWith(id);
+        var timetable = possibleMatches.get(0);
         List<String> text = new ArrayList<>();
         List<String> data = new ArrayList<>();
         timetable.setHour(Short.valueOf(splitCallbackData[3]));
 
-        for (int i = 0; i <= 60; i += 5) {
+        for (int i = 0; i <= 59; i++) {
             text.add(String.valueOf(i));
             data.add(TIMETABLE_ADD_MINUTE + i + "_" + id);
         }
 
-        text.add("Назад");
+        text.add("\uD83D\uDD19 Назад");
 
         switch (timetable.getWeekDay()) {
             case MONDAY -> data.add(TIMETABLE_ADD_WEEKDAY + 1 + "_" + id);
@@ -430,7 +416,6 @@ public class TimetableManager extends AbstractManager {
 
         timetableRepo.save(timetable);
 
-        timetableRepo.save(timetable);
         return methodFactory.getEditMessageText(
                 callbackQuery,
                 "Выберете минуту",
@@ -438,12 +423,12 @@ public class TimetableManager extends AbstractManager {
                         text,
                         List.of(6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 1),
                         data));
-
     }
 
     private BotApiMethod<?> addWeekDay(CallbackQuery callbackQuery, String[] data) {
-        UUID id = UUID.fromString(data[4]);
-        var timetable = timetableRepo.findTimetableById(id);
+        String id = data[4];
+        List<Timetable> possibleMatches = timetableRepo.findByIdStartingWith(id);
+        var timetable = possibleMatches.get(0);
 
         switch (data[3]) {
             case "1" -> timetable.setWeekDay(WeekDay.MONDAY);
@@ -457,13 +442,14 @@ public class TimetableManager extends AbstractManager {
 
         List<String> buttonsData = new ArrayList<>();
         List<String> text = new ArrayList<>();
+
         for (int i = 1; i <= 24; i++) {
             text.add(String.valueOf(i));
             buttonsData.add(TIMETABLE_ADD_HOUR + i + "_" + data[4]);
         }
 
         buttonsData.add(TIMETABLE_ADD + "_" + data[4]);
-        text.add("Назад");
+        text.add("\uD83D\uDD19 Назад");
         timetableRepo.save(timetable);
 
         return methodFactory.getEditMessageText(
@@ -494,7 +480,7 @@ public class TimetableManager extends AbstractManager {
         if (timetableList == null || timetableList.isEmpty()) {
             text.append("У вас нет занятий в этот день");
         } else {
-            text.append("У вас сегодня есть занятия:\n");
+            text.append("У вас есть занятия:\n");
 
             for (Timetable t : timetableList) {
                 text.append("\u25AA ")
@@ -568,7 +554,7 @@ public class TimetableManager extends AbstractManager {
             var timetable = new Timetable();
             timetable.addUser(userRepo.findUserByChatId(callbackQuery.getMessage().getChatId()));
             timetable.setInCreation(true);
-            id = timetableRepo.save(timetable).getId().toString();
+            id = timetableRepo.save(timetable).getId().toString().substring(0, 8);
         } else {
             id = splitCallbackData[2];
         }
@@ -580,6 +566,7 @@ public class TimetableManager extends AbstractManager {
         }
 
         data.add(TIMETABLE);
+
         return methodFactory.getEditMessageText(callbackQuery,
                 """
                         ✏️ Выберете день, в который хотите добавить занятие:

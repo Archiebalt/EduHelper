@@ -79,9 +79,8 @@ public class ProgressControlManager extends AbstractManager {
     private BotApiMethod<?> showUserStat(CallbackQuery callbackQuery, String id) {
         var student = userRepo.findUserByToken(id);
         var details = student.getDetails();
-
         StringBuilder text = new StringBuilder("\uD83D\uDD39 Статистика по ученику \"")
-                .append(details.getFirstname() + " (@" + details.getUsername() + ")")
+                .append(details.getFirstname() + "(" + details.getUsername() + ")")
                 .append("\"")
                 .append("\n\n");
 
@@ -93,18 +92,18 @@ public class ProgressControlManager extends AbstractManager {
 
         int sum = fail + success;
 
-        text.append("\n✅ Решено - ")
+        text.append("\uD83D\uDCCD Решено - ")
                 .append(success);
-        text.append("\n\n❌ Провалено - ")
+        text.append("\n\uD83D\uDCCD Провалено - ")
                 .append(fail);
-        text.append("\n\n📋 Всего - ")
+        text.append("\n\uD83D\uDCCD Всего - ")
                 .append(sum);
 
         return methodFactory.getEditMessageText(
                 callbackQuery,
                 text.toString(),
                 keyboardFactory.getInlineKeyboard(
-                        List.of("⬅️ Назад"),
+                        List.of("\uD83D\uDD19 Назад"),
                         List.of(1),
                         List.of(PROGRESS_STAT)));
     }
@@ -112,9 +111,10 @@ public class ProgressControlManager extends AbstractManager {
     private BotApiMethod<?> mainMenu(CallbackQuery callbackQuery) {
         return methodFactory.getEditMessageText(
                 callbackQuery,
-                "Здесь вы можете увидеть статистику по каждому ученику",
+                """
+                        Здесь вы можете увидеть статистику по каждому ученику""",
                 keyboardFactory.getInlineKeyboard(
-                        List.of("Статистика успеваемости"),
+                        List.of("\uD83D\uDCCA Статистика успеваемости"),
                         List.of(1),
                         List.of(PROGRESS_STAT)));
     }
@@ -122,16 +122,16 @@ public class ProgressControlManager extends AbstractManager {
     private BotApiMethod<?> mainMenu(Message message) {
         return methodFactory.getSendMessage(
                 message.getChatId(),
-                "Здесь вы можете увидеть статистику по каждому ученику",
+                """
+                        Здесь вы можете увидеть статистику по каждому ученику""",
                 keyboardFactory.getInlineKeyboard(
-                        List.of("Статистика успеваемости"),
+                        List.of("\uD83D\uDCCA Статистика успеваемости"),
                         List.of(1),
                         List.of(PROGRESS_STAT)));
     }
 
     private BotApiMethod<?> stat(CallbackQuery callbackQuery) {
         var teacher = userRepo.findUserByChatId(callbackQuery.getMessage().getChatId());
-
         List<User> students = teacher.getUsers();
         List<String> text = new ArrayList<>();
         List<String> data = new ArrayList<>();
@@ -154,12 +154,11 @@ public class ProgressControlManager extends AbstractManager {
         }
 
         data.add(PROGRESS);
-        text.add("⬅️ Назад");
+        text.add("\uD83D\uDD19 Назад");
         cfg.add(1);
-
         return methodFactory.getEditMessageText(
                 callbackQuery,
-                "Выберете ученика",
+                "\uD83D\uDC64 Выберете ученика",
                 keyboardFactory.getInlineKeyboard(
                         text, cfg, data));
     }

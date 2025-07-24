@@ -13,6 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import ie.arch.tutorbot.entity.task.CompleteStatus;
 import ie.arch.tutorbot.entity.task.Task;
 import ie.arch.tutorbot.entity.user.Action;
 import ie.arch.tutorbot.entity.user.Role;
@@ -194,12 +195,18 @@ public class TaskManager extends AbstractManager {
                         callbackQuery, null));
 
         if (status) {
+            task.setCompleteStatus(CompleteStatus.SUCCESS);
+            task.setIsFinished(true);
+            taskRepo.save(task);
             return methodFactory.getSendMessage(
                     teacher.getChatId(),
                     "Ученик " + studentName + "(@" + studentUserName + ")" +
                             " успешно выполнил(а) задание",
                     null);
         } else {
+            task.setCompleteStatus(CompleteStatus.FAIL);
+            task.setIsFinished(true);
+            taskRepo.save(task);
             return methodFactory.getSendMessage(
                     teacher.getChatId(),
                     "Ученик " + studentName + "(@" + studentUserName + ")" +
@@ -274,6 +281,7 @@ public class TaskManager extends AbstractManager {
 
         bot.execute(methodFactory.getDeleteMessage(
                 chatId, task.getMessageId()));
+
         task.setIsInCreation(false);
         taskRepo.save(task);
 
@@ -430,7 +438,7 @@ public class TaskManager extends AbstractManager {
     private BotApiMethod<?> abortCreation(CallbackQuery callbackQuery, String id, Bot bot) throws TelegramApiException {
         taskRepo.deleteById(UUID.fromString(id));
         bot.execute(methodFactory.getAnswerCallbackQuery(callbackQuery.getId(), "Сообщение отменено"));
-        
+
         return methodFactory.getDeleteMessage(callbackQuery.getMessage().getChatId(),
                 callbackQuery.getMessage().getMessageId());
     }

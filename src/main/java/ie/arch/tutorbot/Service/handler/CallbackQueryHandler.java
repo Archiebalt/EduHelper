@@ -12,6 +12,7 @@ import ie.arch.tutorbot.service.manager.help.HelpManager;
 import ie.arch.tutorbot.service.manager.profile.ProfileManager;
 import ie.arch.tutorbot.service.manager.progress_control.ProgressControlManager;
 import ie.arch.tutorbot.service.manager.search.SearchManager;
+import ie.arch.tutorbot.service.manager.start.StartManager;
 import ie.arch.tutorbot.service.manager.task.TaskManager;
 import ie.arch.tutorbot.service.manager.timetable.TimetableManager;
 import ie.arch.tutorbot.telegram.Bot;
@@ -40,6 +41,8 @@ public class CallbackQueryHandler {
     ProfileManager profileManager;
 
     SearchManager searchManager;
+
+    StartManager startManager;
 
     public BotApiMethod<?> answer(CallbackQuery callbackQuery, Bot bot) {
         String callbackData = callbackQuery.getData();
@@ -76,6 +79,10 @@ public class CallbackQueryHandler {
 
             case HELP -> {
                 return helpManager.answerCallbackQuery(callbackQuery, bot);
+            }
+
+            case START -> {
+                return startManager.answerCallbackQuery(callbackQuery, bot);
             }
         }
 

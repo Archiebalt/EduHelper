@@ -90,7 +90,8 @@ public class ProfileManager extends AbstractManager {
         }
 
         text.append("\n\u25AA Роль - ").append(user.getRole().name());
-        text.append("\n\u25AA Ваш уникальный токен - ").append(user.getToken().toString());
+        text.append("\n\u25AA Ваш уникальный токен - ");
+        text.append(user.getToken().toString());
         text.append("\n\n⚠️ - токен необходим для того, чтобы ученик или преподаватель могли устанавливать между собой связь");
 
         return text.toString();

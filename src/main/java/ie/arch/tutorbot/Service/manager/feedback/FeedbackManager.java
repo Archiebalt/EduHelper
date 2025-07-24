@@ -1,5 +1,9 @@
 package ie.arch.tutorbot.service.manager.feedback;
 
+import static ie.arch.tutorbot.service.data.CallbackData.START;
+
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -18,38 +22,44 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 public class FeedbackManager extends AbstractManager {
 
-        AnswerMethodFactory answerMethodFactory;
-        KeyboardFactory keyboardFactory;
+    AnswerMethodFactory answerMethodFactory;
+    KeyboardFactory keyboardFactory;
 
-        @Override
-        public BotApiMethod<?> answerCommand(Message message, Bot bot) {
-                return answerMethodFactory.getSendMessage(
-                                message.getChatId(),
+    @Override
+    public BotApiMethod<?> answerCommand(Message message, Bot bot) {
+        return answerMethodFactory.getSendMessage(
+                message.getChatId(),
 
-                                """
-                                                📍 Ссылки для обратной связи
-                                                GitHub - https://github.com/Archiebalt
-                                                Telegram - https://t.me/Archie1810
-                                                """,
-                                null);
-        }
+                """
+                        📍 Ссылки для обратной связи
+                        GitHub - https://github.com/Archiebalt
+                        Telegram - https://t.me/Archie1810
+                        """,
+                keyboardFactory.getInlineKeyboard(
+                        List.of("Главное меню"),
+                        List.of(1),
+                        List.of(START)));
+    }
 
-        @Override
-        public BotApiMethod<?> answerCallbackQuery(CallbackQuery callbackQuery, Bot bot) {
-                return answerMethodFactory.getEditMessageText(
-                                callbackQuery,
+    @Override
+    public BotApiMethod<?> answerCallbackQuery(CallbackQuery callbackQuery, Bot bot) {
+        return answerMethodFactory.getEditMessageText(
+                callbackQuery,
 
-                                """
-                                                📍 Ссылки для обратной связи
-                                                GitHub - https://github.com/Archiebalt
-                                                Telegram - https://t.me/Archie1810
-                                                """,
-                                null);
-        }
+                """
+                        📍 Ссылки для обратной связи
+                        GitHub - https://github.com/Archiebalt
+                        Telegram - https://t.me/Archie1810
+                        """,
+                keyboardFactory.getInlineKeyboard(
+                        List.of("⬅️ Назад"),
+                        List.of(1),
+                        List.of(START)));
+    }
 
-        @Override
-        public BotApiMethod<?> answerMessage(Message message, Bot bot) {
-                return null;
-        }
+    @Override
+    public BotApiMethod<?> answerMessage(Message message, Bot bot) {
+        return null;
+    }
 
 }

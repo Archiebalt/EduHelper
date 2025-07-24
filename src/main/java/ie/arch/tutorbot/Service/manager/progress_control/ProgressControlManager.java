@@ -11,6 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 import ie.arch.tutorbot.entity.task.CompleteStatus;
+import ie.arch.tutorbot.entity.user.Role;
 import ie.arch.tutorbot.entity.user.User;
 import ie.arch.tutorbot.repository.TaskRepo;
 import ie.arch.tutorbot.repository.UserRepo;
@@ -28,12 +29,21 @@ import lombok.experimental.FieldDefaults;
 public class ProgressControlManager extends AbstractManager {
 
     AnswerMethodFactory methodFactory;
+
     KeyboardFactory keyboardFactory;
+
     TaskRepo taskRepo;
+
     UserRepo userRepo;
 
     @Override
     public BotApiMethod<?> answerCommand(Message message, Bot bot) {
+        var user = userRepo.findUserByChatId(message.getChatId());
+
+        if (Role.STUDENT.equals(user.getRole())) {
+            return null;
+        }
+
         return mainMenu(message);
     }
 
@@ -94,7 +104,7 @@ public class ProgressControlManager extends AbstractManager {
                 callbackQuery,
                 text.toString(),
                 keyboardFactory.getInlineKeyboard(
-                        List.of("Назад"),
+                        List.of("⬅️ Назад"),
                         List.of(1),
                         List.of(PROGRESS_STAT)));
     }
@@ -144,7 +154,7 @@ public class ProgressControlManager extends AbstractManager {
         }
 
         data.add(PROGRESS);
-        text.add("Назад");
+        text.add("⬅️ Назад");
         cfg.add(1);
 
         return methodFactory.getEditMessageText(

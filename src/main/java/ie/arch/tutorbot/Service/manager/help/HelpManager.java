@@ -1,5 +1,9 @@
 package ie.arch.tutorbot.service.manager.help;
 
+import static ie.arch.tutorbot.service.data.CallbackData.START;
+
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -18,49 +22,52 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 public class HelpManager extends AbstractManager {
 
-        AnswerMethodFactory answerMethodFactory;
-        KeyboardFactory keyboardFactory;
+    AnswerMethodFactory answerMethodFactory;
+    KeyboardFactory keyboardFactory;
 
-        @Override
-        public BotApiMethod<?> answerCommand(Message message, Bot bot) {
-                return answerMethodFactory.getSendMessage(
-                                message.getChatId(),
+    @Override
+    public BotApiMethod<?> answerCommand(Message message, Bot bot) {
+        return answerMethodFactory.getSendMessage(
+                message.getChatId(),
 
-                                """
-                                                📍 Доступные команды:
-                                                - start
-                                                - help
-                                                - feedback
+                """
+                        📍 Доступные команды:
+                        Нажмите на "Меню", чтобы увидеть список доступных команд
 
-                                                📍 Доступные функции:
-                                                - Расписание
-                                                - Домашнее задание
-                                                - Контроль успеваемости
+                        📍 Доступные функции:
+                        - Расписание (/timetable)
+                        - Домашнее задание (/task)
+                        - Контроль успеваемости (/progress)
+                        """,
+                keyboardFactory.getInlineKeyboard(
+                        List.of("Главное меню"),
+                        List.of(1),
+                        List.of(START)));
+    }
 
-                                                """,
-                                null);
-        }
+    @Override
+    public BotApiMethod<?> answerCallbackQuery(CallbackQuery callbackQuery, Bot bot) {
+        return answerMethodFactory.getEditMessageText(callbackQuery,
+                """
+                        📍 Доступные команды:
+                        - start
+                        - help
+                        - feedback
 
-        @Override
-        public BotApiMethod<?> answerCallbackQuery(CallbackQuery callbackQuery, Bot bot) {
-                return answerMethodFactory.getEditMessageText(callbackQuery,
-                                """
-                                                📍 Доступные команды:
-                                                - start
-                                                - help
-                                                - feedback
+                        📍 Доступные функции:
+                        - Расписание
+                        - Домашнее задание
+                        - Контроль успеваемости
+                        """,
+                keyboardFactory.getInlineKeyboard(
+                        List.of("⬅️ Назад"),
+                        List.of(1),
+                        List.of(START)));
+    }
 
-                                                📍 Доступные функции:
-                                                - Расписание
-                                                - Домашнее задание
-                                                - Контроль успеваемости
-                                                """,
-                                null);
-        }
-
-        @Override
-        public BotApiMethod<?> answerMessage(Message message, Bot bot) {
-                return null;
-        }
+    @Override
+    public BotApiMethod<?> answerMessage(Message message, Bot bot) {
+        return null;
+    }
 
 }

@@ -15,6 +15,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import ie.arch.tutorbot.entity.task.Task;
 import ie.arch.tutorbot.entity.user.Action;
+import ie.arch.tutorbot.entity.user.Role;
 import ie.arch.tutorbot.entity.user.User;
 import ie.arch.tutorbot.repository.TaskRepo;
 import ie.arch.tutorbot.repository.UserRepo;
@@ -44,6 +45,12 @@ public class TaskManager extends AbstractManager {
 
     @Override
     public BotApiMethod<?> answerCommand(Message message, Bot bot) {
+        var user = userRepo.findUserByChatId(message.getChatId());
+
+        if (Role.STUDENT.equals(user.getRole())) {
+            return null;
+        }
+
         return mainMenu(message);
     }
 
@@ -181,6 +188,7 @@ public class TaskManager extends AbstractManager {
         var task = taskRepo.findById(UUID.fromString(id)).orElseThrow();
         var teacher = task.getTeacher();
         String studentName = task.getStudent().getDetails().getFirstname();
+        String studentUserName = task.getStudent().getDetails().getUsername();
         bot.execute(
                 methodFactory.getEditMessageReplyMarkup(
                         callbackQuery, null));
@@ -188,13 +196,13 @@ public class TaskManager extends AbstractManager {
         if (status) {
             return methodFactory.getSendMessage(
                     teacher.getChatId(),
-                    "Ученик " + studentName +
+                    "Ученик " + studentName + "(@" + studentUserName + ")" +
                             " успешно выполнил(а) задание",
                     null);
         } else {
             return methodFactory.getSendMessage(
                     teacher.getChatId(),
-                    "Ученик " + studentName +
+                    "Ученик " + studentName + "(@" + studentUserName + ")" +
                             " не справился(ась) с заданием",
                     null);
         }
@@ -233,7 +241,7 @@ public class TaskManager extends AbstractManager {
         }
 
         data.add(TASK_MENU + id);
-        text.add("Назад");
+        text.add("⬅️ Назад");
         cfg.add(1);
 
         return methodFactory.getEditMessageText(
@@ -292,7 +300,7 @@ public class TaskManager extends AbstractManager {
                 callbackQuery,
                 "Отправьте измененное Фото|Видео|Документ|Аудио",
                 keyboardFactory.getInlineKeyboard(
-                        List.of("Назад"),
+                        List.of("⬅️ Назад"),
                         List.of(1),
                         List.of(TASK_MENU + id)));
     }
@@ -306,7 +314,7 @@ public class TaskManager extends AbstractManager {
                 callbackQuery,
                 "Отправьте измененный текст",
                 keyboardFactory.getInlineKeyboard(
-                        List.of("Назад"),
+                        List.of("⬅️ Назад"),
                         List.of(1),
                         List.of(TASK_MENU + id)));
     }
@@ -320,7 +328,7 @@ public class TaskManager extends AbstractManager {
                     "Сообщение должно содержать один медиа файл (Фото, Видео, Документ или Аудио)\n\n" +
                             "и не должно содержать текста",
                     keyboardFactory.getInlineKeyboard(
-                            List.of("Назад"),
+                            List.of("⬅️ Назад"),
                             List.of(1),
                             List.of(TASK_MENU + task.getId())));
         }
@@ -355,7 +363,7 @@ public class TaskManager extends AbstractManager {
                     chatId,
                     "Сообщение должно содержать текст",
                     keyboardFactory.getInlineKeyboard(
-                            List.of("Назад"),
+                            List.of("⬅️ Назад"),
                             List.of(1),
                             List.of(TASK_MENU + task.getId())));
         }
@@ -422,6 +430,7 @@ public class TaskManager extends AbstractManager {
     private BotApiMethod<?> abortCreation(CallbackQuery callbackQuery, String id, Bot bot) throws TelegramApiException {
         taskRepo.deleteById(UUID.fromString(id));
         bot.execute(methodFactory.getAnswerCallbackQuery(callbackQuery.getId(), "Сообщение отменено"));
+        
         return methodFactory.getDeleteMessage(callbackQuery.getMessage().getChatId(),
                 callbackQuery.getMessage().getMessageId());
     }
@@ -484,7 +493,7 @@ public class TaskManager extends AbstractManager {
                 callbackQuery,
                 "Отправьте задание одним сообщением",
                 keyboardFactory.getInlineKeyboard(
-                        List.of("Назад"),
+                        List.of("⬅️ Назад"),
                         List.of(1),
                         List.of(TASK_CREATE)));
     }
@@ -513,7 +522,7 @@ public class TaskManager extends AbstractManager {
         }
 
         data.add(TASK);
-        text.add("Назад");
+        text.add("⬅️ Назад");
         cfg.add(1);
 
         return methodFactory.getEditMessageText(callbackQuery,

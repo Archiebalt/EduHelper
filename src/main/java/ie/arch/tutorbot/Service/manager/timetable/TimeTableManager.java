@@ -68,9 +68,11 @@ public class TimetableManager extends AbstractManager {
             case SENDING_DESCRIPTION -> {
                 return setDescription(message, user);
             }
-        }
 
-        return null;
+            default -> {
+                return null;
+            }
+        }
     }
 
     @Override

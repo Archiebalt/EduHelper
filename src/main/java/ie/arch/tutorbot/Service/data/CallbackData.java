@@ -1,6 +1,5 @@
 package ie.arch.tutorbot.service.data;
 
-import javax.print.DocFlavor.STRING;
 
 public class CallbackData {
 
@@ -123,6 +122,8 @@ public class CallbackData {
     public static final String PROGRESS = "progress";
 
     public static final String PROGRESS_STAT = "progress_stat";
+
+    public static final String PROGRESS_USER = "progress_user_";
 
     public static final String AUTH_TEACHER = "auth_teacher";
 

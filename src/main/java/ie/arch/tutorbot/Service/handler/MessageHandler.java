@@ -39,7 +39,7 @@ public class MessageHandler {
                 return timetableManager.answerMessage(message, bot);
             }
 
-            case SENDING_TASK -> {
+            case SENDING_TASK, SENDING_MEDIA, SENDING_TEXT -> {
                 return taskManager.answerMessage(message, bot);
             }
 

@@ -1,8 +1,11 @@
 package ie.arch.tutorbot.entity.timetable;
 
 public enum WeekDay {
-
     MONDAY,
-    THUESDAY,
-
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY
 }

@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.entity.user;
+package ie.arch.eduhelper.entity.user;
 
 public enum Action {
     FREE,

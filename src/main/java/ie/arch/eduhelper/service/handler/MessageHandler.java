@@ -1,15 +1,14 @@
-package ie.arch.tutorbot.service.handler;
+package ie.arch.eduhelper.service.handler;
 
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import ie.arch.tutorbot.repository.UserRepo;
-import ie.arch.tutorbot.service.manager.search.SearchManager;
-import ie.arch.tutorbot.service.manager.task.TaskManager;
-import ie.arch.tutorbot.service.manager.timetable.TimetableManager;
-import ie.arch.tutorbot.telegram.Bot;
-
+import ie.arch.eduhelper.repository.UserRepo;
+import ie.arch.eduhelper.service.manager.search.SearchManager;
+import ie.arch.eduhelper.service.manager.task.TaskManager;
+import ie.arch.eduhelper.service.manager.timetable.TimetableManager;
+import ie.arch.eduhelper.telegram.Bot;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

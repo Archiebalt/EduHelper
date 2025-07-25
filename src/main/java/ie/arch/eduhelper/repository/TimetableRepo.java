@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.repository;
+package ie.arch.eduhelper.repository;
 
 import java.util.List;
 import java.util.UUID;
@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import ie.arch.tutorbot.entity.timetable.Timetable;
-import ie.arch.tutorbot.entity.timetable.WeekDay;
-import ie.arch.tutorbot.entity.user.User;
+import ie.arch.eduhelper.entity.timetable.Timetable;
+import ie.arch.eduhelper.entity.timetable.WeekDay;
+import ie.arch.eduhelper.entity.user.User;
 
 @Repository
 public interface TimetableRepo extends JpaRepository<Timetable, UUID> {

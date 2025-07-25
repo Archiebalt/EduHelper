@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.proxy;
+package ie.arch.eduhelper.proxy;
 
 import java.time.LocalDateTime;
 
@@ -9,11 +9,11 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 
-import ie.arch.tutorbot.entity.user.Action;
-import ie.arch.tutorbot.entity.user.Role;
-import ie.arch.tutorbot.entity.user.UserDetails;
-import ie.arch.tutorbot.repository.DetailsRepo;
-import ie.arch.tutorbot.repository.UserRepo;
+import ie.arch.eduhelper.entity.user.Action;
+import ie.arch.eduhelper.entity.user.Role;
+import ie.arch.eduhelper.entity.user.UserDetails;
+import ie.arch.eduhelper.repository.DetailsRepo;
+import ie.arch.eduhelper.repository.UserRepo;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -64,7 +64,7 @@ public class UserCreationAspect {
 
         detailsRepo.save(details);
 
-        ie.arch.tutorbot.entity.user.User newUser = ie.arch.tutorbot.entity.user.User.builder()
+        ie.arch.eduhelper.entity.user.User newUser = ie.arch.eduhelper.entity.user.User.builder()
 
                 .chatId(telegramUser.getId())
                 .action(Action.FREE)

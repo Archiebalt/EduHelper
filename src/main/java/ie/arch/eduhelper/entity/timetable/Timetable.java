@@ -1,10 +1,10 @@
-package ie.arch.tutorbot.entity.timetable;
+package ie.arch.eduhelper.entity.timetable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import ie.arch.tutorbot.entity.user.User;
+import ie.arch.eduhelper.entity.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

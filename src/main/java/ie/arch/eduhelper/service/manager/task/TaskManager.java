@@ -1,6 +1,6 @@
-package ie.arch.tutorbot.service.manager.task;
+package ie.arch.eduhelper.service.manager.task;
 
-import static ie.arch.tutorbot.service.data.CallbackData.*;
+import static ie.arch.eduhelper.service.data.CallbackData.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,17 +13,17 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import ie.arch.tutorbot.entity.task.CompleteStatus;
-import ie.arch.tutorbot.entity.task.Task;
-import ie.arch.tutorbot.entity.user.Action;
-import ie.arch.tutorbot.entity.user.Role;
-import ie.arch.tutorbot.entity.user.User;
-import ie.arch.tutorbot.repository.TaskRepo;
-import ie.arch.tutorbot.repository.UserRepo;
-import ie.arch.tutorbot.service.factory.AnswerMethodFactory;
-import ie.arch.tutorbot.service.factory.KeyboardFactory;
-import ie.arch.tutorbot.service.manager.AbstractManager;
-import ie.arch.tutorbot.telegram.Bot;
+import ie.arch.eduhelper.entity.task.CompleteStatus;
+import ie.arch.eduhelper.entity.task.Task;
+import ie.arch.eduhelper.entity.user.Action;
+import ie.arch.eduhelper.entity.user.Role;
+import ie.arch.eduhelper.entity.user.User;
+import ie.arch.eduhelper.repository.TaskRepo;
+import ie.arch.eduhelper.repository.UserRepo;
+import ie.arch.eduhelper.service.factory.AnswerMethodFactory;
+import ie.arch.eduhelper.service.factory.KeyboardFactory;
+import ie.arch.eduhelper.service.manager.AbstractManager;
+import ie.arch.eduhelper.telegram.Bot;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

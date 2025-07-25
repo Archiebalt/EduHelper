@@ -1,11 +1,11 @@
-package ie.arch.tutorbot.entity.task;
+package ie.arch.eduhelper.entity.task;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
-import ie.arch.tutorbot.entity.user.Role;
-import ie.arch.tutorbot.entity.user.User;
+import ie.arch.eduhelper.entity.user.Role;
+import ie.arch.eduhelper.entity.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

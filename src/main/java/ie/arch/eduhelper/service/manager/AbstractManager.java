@@ -1,10 +1,10 @@
-package ie.arch.tutorbot.service.manager;
+package ie.arch.eduhelper.service.manager;
 
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import ie.arch.tutorbot.telegram.Bot;
+import ie.arch.eduhelper.telegram.Bot;
 
 public abstract class AbstractManager {
 

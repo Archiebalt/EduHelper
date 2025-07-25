@@ -1,11 +1,11 @@
-package ie.arch.tutorbot;
+package ie.arch.eduhelper;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-import ie.arch.tutorbot.telegram.TelegramProperties;
+import ie.arch.eduhelper.telegram.TelegramProperties;
 
 
 @EnableAspectJAutoProxy

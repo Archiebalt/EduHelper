@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.proxy;
+package ie.arch.eduhelper.proxy;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -8,13 +8,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import ie.arch.tutorbot.entity.user.Action;
-import ie.arch.tutorbot.entity.user.Role;
-import ie.arch.tutorbot.entity.user.User;
-
-import ie.arch.tutorbot.repository.UserRepo;
-import ie.arch.tutorbot.service.manager.auth.AuthManager;
-import ie.arch.tutorbot.telegram.Bot;
+import ie.arch.eduhelper.entity.user.Action;
+import ie.arch.eduhelper.entity.user.Role;
+import ie.arch.eduhelper.entity.user.User;
+import ie.arch.eduhelper.repository.UserRepo;
+import ie.arch.eduhelper.service.manager.auth.AuthManager;
+import ie.arch.eduhelper.telegram.Bot;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

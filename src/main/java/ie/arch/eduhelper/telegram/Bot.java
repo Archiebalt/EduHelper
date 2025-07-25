@@ -1,11 +1,11 @@
-package ie.arch.tutorbot.telegram;
+package ie.arch.eduhelper.telegram;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import ie.arch.tutorbot.service.UpdateDispatcher;
+import ie.arch.eduhelper.service.UpdateDispatcher;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 

@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.entity.user;
+package ie.arch.eduhelper.entity.user;
 
 import java.util.ArrayList;
 import java.util.List;

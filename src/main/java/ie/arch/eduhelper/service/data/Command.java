@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.service.data;
+package ie.arch.eduhelper.service.data;
 
 public class Command {
 

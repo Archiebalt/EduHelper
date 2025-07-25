@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.entity.timetable;
+package ie.arch.eduhelper.entity.timetable;
 
 public enum WeekDay {
     MONDAY("Понедельник"),

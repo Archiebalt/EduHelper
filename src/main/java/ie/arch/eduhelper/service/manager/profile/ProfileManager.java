@@ -1,6 +1,6 @@
-package ie.arch.tutorbot.service.manager.profile;
+package ie.arch.eduhelper.service.manager.profile;
 
-import static ie.arch.tutorbot.service.data.CallbackData.PROFILE_REFRESH_TOKEN;
+import static ie.arch.eduhelper.service.data.CallbackData.PROFILE_REFRESH_TOKEN;
 
 import java.util.List;
 
@@ -9,12 +9,11 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import ie.arch.tutorbot.repository.UserRepo;
-import ie.arch.tutorbot.service.factory.AnswerMethodFactory;
-import ie.arch.tutorbot.service.factory.KeyboardFactory;
-import ie.arch.tutorbot.service.manager.AbstractManager;
-import ie.arch.tutorbot.telegram.Bot;
-
+import ie.arch.eduhelper.repository.UserRepo;
+import ie.arch.eduhelper.service.factory.AnswerMethodFactory;
+import ie.arch.eduhelper.service.factory.KeyboardFactory;
+import ie.arch.eduhelper.service.manager.AbstractManager;
+import ie.arch.eduhelper.telegram.Bot;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

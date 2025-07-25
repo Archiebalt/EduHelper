@@ -1,22 +1,21 @@
-package ie.arch.tutorbot.service.handler;
+package ie.arch.eduhelper.service.handler;
 
-import static ie.arch.tutorbot.service.data.CallbackData.*;
+import static ie.arch.eduhelper.service.data.CallbackData.*;
 
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
-import ie.arch.tutorbot.service.manager.auth.AuthManager;
-import ie.arch.tutorbot.service.manager.feedback.FeedbackManager;
-import ie.arch.tutorbot.service.manager.help.HelpManager;
-import ie.arch.tutorbot.service.manager.profile.ProfileManager;
-import ie.arch.tutorbot.service.manager.progress_control.ProgressControlManager;
-import ie.arch.tutorbot.service.manager.search.SearchManager;
-import ie.arch.tutorbot.service.manager.start.StartManager;
-import ie.arch.tutorbot.service.manager.task.TaskManager;
-import ie.arch.tutorbot.service.manager.timetable.TimetableManager;
-import ie.arch.tutorbot.telegram.Bot;
-
+import ie.arch.eduhelper.service.manager.auth.AuthManager;
+import ie.arch.eduhelper.service.manager.feedback.FeedbackManager;
+import ie.arch.eduhelper.service.manager.help.HelpManager;
+import ie.arch.eduhelper.service.manager.profile.ProfileManager;
+import ie.arch.eduhelper.service.manager.progress_control.ProgressControlManager;
+import ie.arch.eduhelper.service.manager.search.SearchManager;
+import ie.arch.eduhelper.service.manager.start.StartManager;
+import ie.arch.eduhelper.service.manager.task.TaskManager;
+import ie.arch.eduhelper.service.manager.timetable.TimetableManager;
+import ie.arch.eduhelper.telegram.Bot;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

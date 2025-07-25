@@ -4,6 +4,7 @@ import static ie.arch.tutorbot.service.data.CallbackData.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -462,10 +463,11 @@ public class TimetableManager extends AbstractManager {
     }
 
     private BotApiMethod<?> showDay(CallbackQuery callbackQuery) {
-        var user = userRepo.findUserByChatId(callbackQuery.getMessage().getChatId());
+        var currentUser = userRepo.findUserByChatId(callbackQuery.getMessage().getChatId());
         WeekDay weekDay = WeekDay.MONDAY;
 
         switch (callbackQuery.getData().split("_")[1]) {
+            case "1" -> weekDay = WeekDay.MONDAY;
             case "2" -> weekDay = WeekDay.TUESDAY;
             case "3" -> weekDay = WeekDay.WEDNESDAY;
             case "4" -> weekDay = WeekDay.THURSDAY;
@@ -474,23 +476,42 @@ public class TimetableManager extends AbstractManager {
             case "7" -> weekDay = WeekDay.SUNDAY;
         }
 
-        List<Timetable> timetableList = timetableRepo.findAllByUsersContainingAndWeekDay(user, weekDay);
+        List<Timetable> timetableList = timetableRepo.findAllByUsersContainingAndWeekDay(currentUser, weekDay);
         StringBuilder text = new StringBuilder();
 
         if (timetableList == null || timetableList.isEmpty()) {
             text.append("У вас нет занятий в этот день");
         } else {
-            text.append("У вас есть занятия:\n");
+            text.append("📅 Ваши занятия на ").append(weekDay.getDisplayName()).append(":\n\n");
 
             for (Timetable t : timetableList) {
-                text.append("\u25AA ")
-                        .append(t.getHour())
-                        .append(":")
-                        .append(t.getMinute())
-                        .append(" - ")
-                        .append(t.getTitle())
-                        .append("\n");
+                // Для ученика показываем преподавателей, для преподавателя - учеников
+                List<User> otherUsers = t.getUsers().stream()
+                        .filter(u -> !u.equals(currentUser))
+                        .collect(Collectors.toList());
 
+                text.append("\uD83D\uDD52 ")
+                        .append(String.format("%02d:%02d", t.getHour(), t.getMinute()))
+                        .append(" - ")
+                        .append(t.getTitle());
+
+                if (!otherUsers.isEmpty()) {
+                    String roleLabel = currentUser.getRole() == Role.STUDENT ? "👨‍🏫 Преподаватель" : "👨🎓 Ученик";
+                    text.append("\n   ").append(roleLabel).append(": ");
+
+                    List<String> userNames = new ArrayList<>();
+                    for (User user : otherUsers) {
+                        String name = user.getDetails().getFirstname();
+                        if (user.getDetails().getUsername() != null && !user.getDetails().getUsername().isEmpty()) {
+                            name += " (@" + user.getDetails().getUsername() + ")";
+                        }
+                        userNames.add(name);
+                    }
+
+                    text.append(String.join(", ", userNames));
+                }
+
+                text.append("\n\n");
             }
         }
 

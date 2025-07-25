@@ -1,11 +1,21 @@
 package ie.arch.tutorbot.entity.timetable;
 
 public enum WeekDay {
-    MONDAY,
-    TUESDAY,
-    WEDNESDAY,
-    THURSDAY,
-    FRIDAY,
-    SATURDAY,
-    SUNDAY
+    MONDAY("Понедельник"),
+    TUESDAY("Вторник"),
+    WEDNESDAY("Среда"),
+    THURSDAY("Четверг"),
+    FRIDAY("Пятница"),
+    SATURDAY("Суббота"),
+    SUNDAY("Воскресенье");
+
+    private final String displayName;
+
+    WeekDay(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
 }

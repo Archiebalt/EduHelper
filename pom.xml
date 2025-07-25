@@ -8,13 +8,13 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.4</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath />
 	</parent>
 
 	<groupId>ie.arch</groupId>
-	<artifactId>telegram-tutor-bot</artifactId>
+	<artifactId>telegram-eduhelper-bot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>telegram-tutor-bot</name>
+	<name>telegram-eduhelper-bot</name>
 	<description>Telegram bot</description>
 
 	<properties>

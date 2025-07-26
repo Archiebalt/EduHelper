@@ -23,14 +23,13 @@ services:
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_BOT_PATH=${TELEGRAM_BOT_PATH}
   db:
-    image: "postgres:16"
+    image: postgres:16
     container_name: eduhelper-db
-    env_file:
-      - .env
+    env_file: .env
     environment:
-      - POSTGRES_DB=eduhelper-bot
-      - POSTGRES_USER=${DB_USERNAME}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      POSTGRES_DB: eduhelper-bot
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -38,3 +37,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
+volumes:
+  postgres_data:

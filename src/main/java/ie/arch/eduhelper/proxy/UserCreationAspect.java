@@ -32,7 +32,7 @@ public class UserCreationAspect {
 
     DetailsRepo detailsRepo;
 
-    @Pointcut("execution(* ie.arch.tutorbot.service.UpdateDispatcher.distribute(..))")
+    @Pointcut("execution(* ie.arch.eduhelper.service.UpdateDispatcher.distribute(..))")
     public void distributeMethodPointcut() {
 
     }

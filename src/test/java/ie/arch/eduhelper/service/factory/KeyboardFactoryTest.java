@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.service.factory;
+package ie.arch.eduhelper.service.factory;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package ie.arch.tutorbot.service.factory;
+package ie.arch.eduhelper.service.factory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

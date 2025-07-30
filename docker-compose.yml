@@ -27,13 +27,13 @@ services:
     container_name: eduhelper-db
     env_file: .env
     environment:
-      POSTGRES_DB: eduhelper-bot
+      POSTGRES_DB: eduhelper-db
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d eduhelper-db"]
       interval: 5s
       timeout: 5s
       retries: 10

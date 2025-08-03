@@ -26,14 +26,15 @@
    git clone https://github.com/Archiebalt/EduHelper.git
 3. Создайте файл .env в корне проекта и отредактируйте
    ```
-   # Telegram
-    TELEGRAM_BOT_USERNAME=@your_bot_username
-    TELEGRAM_BOT_TOKEN=your_bot_token
-    TELEGRAM_BOT_PATH=https://your-webhook-url
+   #Telegram
+   TELEGRAM_BOT_USERNAME=@your_bot_username
+   TELEGRAM_BOT_TOKEN=your_bot_token
+   TELEGRAM_BOT_PATH=https://your-webhook-url
 
-    # Database
-    DB_USERNAME=username
-    DB_PASSWORD=strongpassword
+   #Database
+   DB_USERNAME=username
+   DB_PASSWORD=strongpassword
+   DB_URL=jdbc:postgresql://db:5432/eduhelper-db
 4. Запуск приложения
    ```bash
    docker-compose up -d --build
